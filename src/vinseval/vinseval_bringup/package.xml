@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>vinseval_bringup</name>
+    <version>1.0.0</version>
+    <description>VINSEval launch file collection</description>
+    <author>Martin Scheiber</author>
+    <maintainer email="martin.scheiber@ieee.org">Martin Scheiber</maintainer>
+
+    <license>BSD with modified Commons Clause</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+</package>

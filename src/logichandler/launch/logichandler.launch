@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+    <!-- arguments -->
+    <arg name="scene_name"                          default="gen3dscene"/>
+    <arg name="number_of_runs"                      default="30"/>
+    <arg name="attribute"                           default="1"/>
+    <arg name="attribute_level"                     default="1"/>
+
+    <arg name="is_imu_noisy"                        default="false" />
+    <arg name="is_imu_body_ref"                     default="false" />
+    <arg name="is_gravity_added_imu"                default="false" />
+
+    <arg name="acc_noise_density"                   default="1.0e-4" />
+    <arg name="gyro_noise_density"                  default="1.0e-5"/>
+    <arg name="acc_random_walk"                     default="1.0e-5"/>
+    <arg name="gyro_random_walk"                    default="1.0e-6"/>
+
+    <arg name="illumination_changes_direction"      default="random"/> <!-- possible valuer [up],[down] and [random]-->
+
+    <arg name="time_delay_s"                        default="0.0"/>
+
+    <arg name="synch"                               default="false"/>
+
+    <arg name="image_width"                         default="640"/>
+    <arg name="image_height"                        default="480"/>
+    <arg name="grayscale"                           default="true"/>
+    <arg name="fisheye"                             default="0.0"/>
+    <arg name="fov"                                 default="70.0"/>
+
+    <arg name="imu_rate"                            default="200"/>
+    <arg name="cam_rate"                            default="40"/>
+
+    <arg name="render_quality"                      default="Fastest"/>
+    <arg name="render_binary_name"                  default="VINSEval_v0.2.0-a2.7_amd_x86_64"/>
+    <arg name="use_external_renderer"               default="0"/>
+
+    <arg name="bagpath"                             default="/data/alfornasier/bagfiles/INPUT/ATTR_$(arg attribute)/LVL_$(arg attribute_level)"/>
+
+    <!-- Use clock scaling -->
+    <param name="/use_sim_time" value="false"/>
+
+    <!--Launch Flightgoggles -->
+    <include file="$(find flightgoggles)/launch/core.launch" >
+
+        <arg name="render_quality"          value="$(arg render_quality)" />
+        <arg name="use_external_renderer"   value="$(arg use_external_renderer)" />
+        <arg name="render_binary_name"      value="$(arg render_binary_name)" />
+
+    </include>
+
+    <node name="logichandler" pkg="logichandler" type="logichandler" output="screen" clear_params="true" required="true">
+
+        <!-- number of runs -->
+        <param name="number_of_runs"            type="int"   value="$(arg number_of_runs)" />
+
+        <!-- selected scene -->
+        <param name="scene_name"                type="string"      value="$(arg scene_name)" />
+
+        <!-- fixed params -->
+        <param name="image_width"                       type="int"          value="$(arg image_width)" />
+        <param name="image_height"                      type="int"          value="$(arg image_height)" />
+        <param name="grayscale"                         type="bool"         value="$(arg grayscale)" />
+        <param name="camera_fov"                        type="double"       value="$(arg fov)" />
+        <param name="illumination_changes_direction"    type="string"       value="$(arg illumination_changes_direction)" />
+
+        <!-- attribute to be evaluated -->
+        <param name="attribute"                 type="int"      value="$(arg attribute)" />
+        <param name="attribute_level"           type="int"      value="$(arg attribute_level)" />
+
+        <!-- semi fixed attribute that are also evaluated -->
+        <param name="fisheye"                   type="double"   value="$(arg fisheye)" />
+        <param name="time_delay_s"              type="double"   value="$(arg time_delay_s)" />
+
+    </node>
+
+    <node name="inputdatahandler" pkg="logichandler" type="inputdatahandler" output="screen" clear_params="true">
+
+        <!-- trajectories files directory -->
+        <param name="files_dir"                 type="string"   value="$(find logichandler)/../../trajectories/" />
+        <param name="n_files"                   type="int"      value="100" />
+
+        <!-- imu params -->
+        <param name="is_imu_noisy"              type="bool"     value="$(arg is_imu_noisy)" />
+        <param name="is_imu_body_ref"           type="bool"     value="$(arg is_imu_body_ref)" />
+        <param name="is_gravity_added_imu"      type="bool"     value="$(arg is_gravity_added_imu)" />
+        <param name="imu_rate"                  type="int"      value="$(arg imu_rate)" />
+        <param name="acc_noise_density"         type="double"   value="$(arg acc_noise_density)" />
+        <param name="gyro_noise_density"        type="double"   value="$(arg gyro_noise_density)" />
+        <param name="acc_random_walk"           type="double"   value="$(arg acc_random_walk)" />
+        <param name="gyro_random_walk"          type="double"   value="$(arg gyro_random_walk)" />
+
+        <!-- synch mode -->
+        <param name="synch"                     type="bool"     value="$(arg synch)" />
+        <param name="cam_rate"                  type="int"      value="$(arg cam_rate)" />
+
+    </node>
+
+    <!-- Launch recorder node -->
+    <include file="$(find vinseval_bringup)/launch/outpudatahandler.launch">
+
+        <arg name="save_dir" value="$(arg bagpath)"/>
+
+    </include>
+
+</launch>

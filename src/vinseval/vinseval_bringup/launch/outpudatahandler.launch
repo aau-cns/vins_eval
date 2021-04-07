@@ -1,0 +1,40 @@
+<launch>
+
+    <arg name="save_dir"      default="$(find logichandler)/../../bagfiles/INPUT/"/>
+
+    <!-- Launch recorder node -->
+    <node name="outputdatahandler" pkg="bag_recorder" type="bag_recorder_node" output="screen" respawn="true">
+
+        <!-- Directory containing configuration files for the bag launcher to read -->
+        <param name="configuration_directory"   type="string"       value="$(find vinseval_bringup)/config/outputdatahandler" />
+
+        <!-- Directory for the bags to be recorded to -->
+        <param name="data_directory"            type="string"       value="$(arg save_dir)"/>
+
+        <!-- Topic for bag launcher to listen to for launching bags -->
+        <param name="start_bag_topic"           type="string"       value="/start"/>
+
+        <!-- Topic for bag launcher to listen to for stopping bags -->
+        <param name="stop_bag_topic"            type="string"       value="/stop"/>
+
+        <!-- Boolean whether or not the bag name is published to a topic -->
+        <param name="publish_name"              type="bool"         value="false"/>
+
+        <!-- Topic to publish bag name to if publish_name is true -->
+        <param name="name_topic"                type="string"       value="/bag_name"/>
+
+        <!-- Boolean whether or not a heartbeat is published for each bag -->
+        <param name="publish_heartbeat"         type="bool"         value="false"/>
+
+        <!-- Topic to publish heartbeat to -->
+        <param name="heartbeat_topic"           type="string"       value="/heartbeat"/>
+
+        <!-- Interval in seconds on which to publish bag heartbeats -->
+        <param name="heartbeat_interval"        type="double"       value="10.0"/>
+
+        <!-- Whether or not to default to recording all topics if a config file is not found -->
+        <param name="default_record_all"        type="bool"         value="false"/>
+
+    </node>
+
+</launch>

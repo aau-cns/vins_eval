@@ -1,0 +1,5 @@
+# REQUEST
+bool start
+---
+# RESPONCE
+bool stop

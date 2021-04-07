@@ -1,0 +1,24 @@
+authors: ["Martin Scheiber"]
+blacklist: []
+build_space: build
+catkin_make_args: []
+cmake_args:
+- -DFLIGHTGOGGLES_DOWNLOAD_BINARY=OFF
+devel_layout: linked
+devel_space: devel
+extend_path: /opt/ros/kinetic
+extends: null
+install: false
+install_space: install
+isolate_install: false
+jobs_args:
+- -j 4
+- -l 4
+licenses: TODO
+log_space: logs
+maintainers: []
+make_args: []
+source_space: src
+use_env_cache: false
+use_internal_make_jobserver: true
+whitelist: []

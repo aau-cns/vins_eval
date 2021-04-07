@@ -1,0 +1,21 @@
+[submodule "flightgoggles"]
+	path = src/flightgoggles
+	url = https://github.com/aau-cns/flightgoggles.git
+	branch = main
+[submodule "src/eval_tools"]
+	path = src/eval_tools
+	url = https://github.com/aau-cns/vins_eval_tools
+	branch = develop
+[submodule "src/rovio/lightweight_filtering"]
+	path = src/rovio/lightweight_filtering
+	url = https://bitbucket.org/bloesch/lightweight_filtering.git
+[submodule "src/open_vins"]
+	path = src/open_vins
+	url = https://github.com/rpng/open_vins.git
+[submodule "src/VINS-Mono"]
+	path = src/VINS-Mono
+	url = https://github.com/HKUST-Aerial-Robotics/VINS-Mono.git
+[submodule "src/bag_recorder"]
+	path = src/bag_recorder
+	url = https://github.com/ist-cns/bag_recorder
+	branch = main

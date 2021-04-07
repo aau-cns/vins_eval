@@ -1,0 +1,20 @@
+# Catkin Workspace ignores
+devel/**
+build/**
+logs/**
+install/**
+.catkin_tools/**
+.workspace
+.workspace.*
+
+# Docker persist ignores
+docker/persist
+!docker/persist/README.md
+
+# QtCrator Ignores
+flightgoggles_cws.*
+
+# files ignores
+*.bag
+*.active
+*.log
